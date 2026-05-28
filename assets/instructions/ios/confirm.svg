@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="420" height="640" viewBox="0 0 420 640" role="img" aria-label="Підтвердження додавання ярлика">
+  <rect width="420" height="640" rx="8" fill="#F7FBF6"/>
+  <rect x="72" y="46" width="276" height="548" rx="34" fill="#FFFFFF" stroke="#D9EBD6" stroke-width="6"/>
+  <rect x="118" y="142" width="184" height="184" rx="8" fill="#42AC35"/>
+  <text x="210" y="250" text-anchor="middle" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="40" font-weight="800">СДН</text>
+  <rect x="228" y="70" width="90" height="44" rx="8" fill="#42AC35"/>
+  <text x="273" y="100" text-anchor="middle" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="20" font-weight="700">Додати</text>
+  <text x="210" y="410" text-anchor="middle" fill="#117407" font-family="Arial, sans-serif" font-size="24" font-weight="700">Підтверди</text>
+</svg>

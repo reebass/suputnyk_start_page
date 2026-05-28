@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="420" viewBox="0 0 720 420" role="img" aria-label="Помічник NOVUS для початку навчання">
+  <rect width="720" height="420" rx="8" fill="#F7FBF6"/>
+  <circle cx="530" cy="92" r="46" fill="#D9EBD6"/>
+  <rect x="122" y="82" width="290" height="236" rx="8" fill="#FFFFFF" stroke="#D9EBD6" stroke-width="4"/>
+  <rect x="154" y="122" width="178" height="22" rx="8" fill="#42AC35"/>
+  <rect x="154" y="164" width="212" height="16" rx="8" fill="#D9EBD6"/>
+  <rect x="154" y="194" width="160" height="16" rx="8" fill="#D9EBD6"/>
+  <rect x="154" y="244" width="174" height="48" rx="8" fill="#42AC35"/>
+  <circle cx="482" cy="218" r="78" fill="#42AC35"/>
+  <circle cx="482" cy="174" r="36" fill="#FFFFFF"/>
+  <path d="M402 330c15-59 48-86 80-86s65 27 80 86H402Z" fill="#117407"/>
+  <path d="M456 169c8 9 18 13 30 13 10 0 19-3 26-9" fill="none" stroke="#117407" stroke-width="8" stroke-linecap="round"/>
+  <text x="360" y="374" text-anchor="middle" fill="#117407" font-family="Arial, sans-serif" font-size="30" font-weight="700">Ласкаво просимо до навчання</text>
+</svg>

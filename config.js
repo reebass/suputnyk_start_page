@@ -1,0 +1,185 @@
+window.NOVUS_LMS_CONFIG = {
+  app: {
+    name: "NOVUS LMS помічник",
+    title: "Розпочни своє навчання в NOVUS",
+    language: "uk",
+  },
+  brand: {
+    logoPath: "assets/logo/novus-logo.svg",
+    logoAlt: "NOVUS",
+    heroPath: "assets/hero/start-hero.svg",
+    heroAlt: "Помічник NOVUS для початку навчання",
+  },
+  links: {
+    telegramBotUrl: "https://t.me/novus_lms_bot_placeholder",
+    sdnUrl: "https://sdn.novus.ua/default?mode=default",
+    telegramInstall: {
+      ios: "https://apps.apple.com/app/telegram-messenger/id686449807",
+      android: "https://play.google.com/store/apps/details?id=org.telegram.messenger",
+      fallback: "https://telegram.org/apps",
+    },
+  },
+  help: {
+    adminName: "ПІБ адміністратора",
+    phone: "+380000000000",
+    label: "Допомога",
+    ariaLabel: "Зателефонувати адміністратору",
+    modalTitle: "Потрібна допомога?",
+    modalText: "Зателефонуй адміністратору, щоб отримати відповіді на питання.",
+    adminLabel: "Адміністратор",
+    emptyPhoneText: "Номер телефону ще не вказано",
+    phoneLabel: "Зателефонувати",
+    closeLabel: "Закрити",
+  },
+  featureFlags: {
+    showTelegramRecommendationModal: true,
+    enableServiceWorker: true,
+    showBackButtons: true,
+  },
+  videos: {
+    telegram: {
+      type: "placeholder",
+      src: "",
+      title: "Відеоінструкція Telegram",
+      placeholder: "Тут буде відеоінструкція для Telegram-бота",
+    },
+    sdn: {
+      type: "placeholder",
+      src: "",
+      title: "Відеоінструкція СДН",
+      placeholder: "Тут буде відеоінструкція для входу в СДН",
+    },
+  },
+  texts: {
+    welcome: {
+      greeting: "Вітаю!",
+      intro: "Зараз я допоможу тобі налаштувати все необхідне для початку навчання.",
+      choose: "Обери зручний спосіб входу:",
+    },
+    buttons: {
+      telegramChoice: "Увійти через Telegram-бот",
+      sdnChoice: "Увійти через СДН «Супутник»",
+      telegramYes: "Так, Telegram є",
+      telegramNo: "Ні, Telegram немає",
+      chooseAnother: "Обрати інший спосіб",
+      installTelegram: "Встановити Telegram",
+      telegramInstalled: "Я встановив(-ла) Telegram",
+      refuseTelegram: "Не хочу встановлювати, перейти через СДН",
+      openTelegramBot: "Я переглянув(-ла), перейти в Telegram-бот",
+      continue: "Я переглянув(-ла), продовжити",
+      showShortcut: "Показати, як додати ярлик",
+      previous: "Назад",
+      next: "Далі",
+      done: "Готово",
+      goToSdnAfterShortcut: "Я додав(-ла) ярлик, перейти в СДН",
+      skipToSdn: "Не виходить? Пропустити",
+      tryTelegram: "Спробувати Telegram",
+      stillSdn: "Все одно перейти в СДН",
+      goToSdn: "Перейти в СДН",
+      openVideo: "Відкрити відео",
+    },
+    telegramCheck: {
+      title: "Перевіримо Telegram",
+      body: "Для входу через Telegram-бот потрібен застосунок Telegram. У тебе вже встановлений Telegram?",
+    },
+    telegramInstall: {
+      title: "Встанови Telegram",
+      body: "Telegram допоможе швидше почати навчання та отримувати підказки в одному місці.",
+      note: "Після встановлення повернись до цієї сторінки або знову відскануй QR-код.",
+    },
+    telegramVideo: {
+      title: "Подивись коротку інструкцію",
+      body: "У відео показано, як відкрити Telegram-бот і почати навчання.",
+    },
+    sdnVideo: {
+      title: "Вхід через СДН «Супутник»",
+      body: "Подивись коротку інструкцію. У ній показано, як зайти в навчання та відкрити потрібний курс.",
+      badgeHintTitle: "Де взяти логін і перший пароль",
+      badgeHint: "Твій логін - це табельний номер на зворотній стороні бейджа. Перший пароль також вказаний на зворотній стороні бейджа.",
+    },
+    shortcutIntro: {
+      title: "Додай СДН на головний екран телефону",
+      body: "Так наступного разу ти зможеш відкрити навчання одним натисканням, як звичайний застосунок.",
+    },
+    shortcutComplete: {
+      title: "Готово!",
+      body: "Тепер ти можеш відкривати СДН через значок на головному екрані.",
+    },
+    modal: {
+      title: "Telegram зазвичай зручніший",
+      body: "У Telegram простіше отримувати підказки та швидше повернутися до навчання. Якщо не хочеш встановлювати Telegram, можна продовжити через СДН.",
+    },
+    desktopFallback: {
+      title: "Цей крок потрібен тільки для смартфона",
+      body: "Якщо ти зараз на комп'ютері, можеш перейти в СДН напряму. На телефоні ми покажемо кроки для додавання ярлика.",
+    },
+    placeholders: {
+      image: "Зображення інструкції",
+      video: "Тут буде відеоінструкція",
+    },
+    slider: {
+      stepPrefix: "Крок",
+      stepSeparator: "з",
+    },
+  },
+  instructions: {
+    iosSafariFirstStep: {
+      title: "Відкрий сторінку в Safari",
+      text: "Щоб додати значок на iPhone, сторінку потрібно відкрити саме в Safari.",
+      image: "assets/instructions/ios/open-safari.svg",
+      alt: "Відкриття сторінки в Safari",
+    },
+    ios: [
+      {
+        title: "Натисни кнопку поширення",
+        text: "У нижній частині Safari натисни кнопку зі стрілкою вгору.",
+        image: "assets/instructions/ios/share.svg",
+        alt: "Кнопка поширення в Safari",
+      },
+      {
+        title: "Обери «На початковий екран»",
+        text: "Прокрути список дій і натисни «На початковий екран».",
+        image: "assets/instructions/ios/add-to-home.svg",
+        alt: "Додавання на початковий екран iPhone",
+      },
+      {
+        title: "Підтверди додавання",
+        text: "Натисни «Додати» у верхньому куті екрана.",
+        image: "assets/instructions/ios/confirm.svg",
+        alt: "Підтвердження додавання ярлика",
+      },
+      {
+        title: "Відкривай СДН зі значка",
+        text: "На головному екрані з'явиться значок СДН. Натискай його, коли потрібно навчатися.",
+        image: "assets/instructions/ios/done.svg",
+        alt: "Готовий ярлик на iPhone",
+      },
+    ],
+    android: [
+      {
+        title: "Відкрий меню браузера",
+        text: "Натисни три крапки у верхньому куті екрана.",
+        image: "assets/instructions/android/menu.svg",
+        alt: "Меню браузера Android",
+      },
+      {
+        title: "Обери «Додати на головний екран»",
+        text: "У меню знайди дію для додавання сторінки на головний екран.",
+        image: "assets/instructions/android/add-to-home.svg",
+        alt: "Додавання на головний екран Android",
+      },
+      {
+        title: "Підтверди додавання",
+        text: "Натисни «Додати» або «Встановити», якщо браузер попросить підтвердження.",
+        image: "assets/instructions/android/confirm.svg",
+        alt: "Підтвердження додавання на Android",
+      },
+      {
+        title: "Відкривай СДН зі значка",
+        text: "На головному екрані з'явиться значок СДН для швидкого входу в навчання.",
+        image: "assets/instructions/android/done.svg",
+        alt: "Готовий ярлик на Android",
+      },
+    ],
+  },
+};

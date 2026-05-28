@@ -13,6 +13,7 @@ window.NOVUS_LMS_CONFIG = {
   links: {
     telegramBotUrl: "https://t.me/novus_lms_bot_placeholder",
     sdnUrl: "https://sdn.novus.ua/default?mode=default",
+    shortcutTargetUrl: "https://sdn.novus.com",
     telegramInstall: {
       ios: "https://apps.apple.com/app/telegram-messenger/id686449807",
       android: "https://play.google.com/store/apps/details?id=org.telegram.messenger",
@@ -109,6 +110,15 @@ window.NOVUS_LMS_CONFIG = {
       title: "Telegram зазвичай зручніший",
       body: "У Telegram простіше отримувати підказки та швидше повернутися до навчання. Якщо не хочеш встановлювати Telegram, можна продовжити через СДН.",
     },
+    shortcutActions: {
+      safariTitle: "Автоматично відкрити Safari неможливо",
+      safariBody: "iPhone не дозволяє сайту примусово відкрити сторінку саме в Safari з іншого браузера або месенджера. Відкрий меню поточного застосунку та обери «Відкрити в Safari», якщо така дія доступна.",
+      shareTitle: "Відкрий меню поширення",
+      shareBody: "Ми спробували відкрити системне меню поширення з посиланням СДН. Якщо меню не відкрилося, натисни кнопку поширення в Safari вручну.",
+      shareUnavailableTitle: "Потрібно натиснути кнопку вручну",
+      shareUnavailableBody: "Цей браузер не дозволяє сайту відкрити меню поширення. Натисни кнопку поширення в Safari вручну.",
+      closeLabel: "Зрозуміло",
+    },
     desktopFallback: {
       title: "Цей крок потрібен тільки для смартфона",
       body: "Якщо ти зараз на комп'ютері, можеш перейти в СДН напряму. На телефоні ми покажемо кроки для додавання ярлика.",
@@ -128,6 +138,7 @@ window.NOVUS_LMS_CONFIG = {
       text: "Щоб додати значок на iPhone, сторінку потрібно відкрити саме в Safari.",
       image: "assets/instructions/ios/open-safari.svg",
       alt: "Відкриття сторінки в Safari",
+      action: "show-safari-help",
     },
     ios: [
       {
@@ -135,6 +146,7 @@ window.NOVUS_LMS_CONFIG = {
         text: "У нижній частині Safari натисни кнопку зі стрілкою вгору.",
         image: "assets/instructions/ios/share.svg",
         alt: "Кнопка поширення в Safari",
+        action: "share-shortcut-target",
       },
       {
         title: "Обери «На початковий екран»",

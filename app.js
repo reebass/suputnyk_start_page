@@ -60,14 +60,16 @@
       '" alt="' + escapeHtml(config.brand.logoAlt) + '"></header>';
   }
 
-  function imageBlock(path, alt, className) {
+  function imageBlock(path, alt, className, action) {
     if (!path) {
       return '<div class="image-placeholder ' + (className || "") + '">' +
         escapeHtml(config.texts.placeholders.image) + "</div>";
     }
-    return '<img class="' + (className || "screen-image") + '" src="' + escapeHtml(path) +
-      '" alt="' + escapeHtml(alt || config.texts.placeholders.image) +
-      '">';
+    var image = '<img class="' + (className || "screen-image") + '" src="' + escapeHtml(path) +
+      '" alt="' + escapeHtml(alt || config.texts.placeholders.image) + '">';
+    if (!action) return image;
+    return '<button class="image-action" type="button" data-action="' + escapeHtml(action) + '">' +
+      image + '</button>';
   }
 
   function renderVideo(video) {
@@ -212,7 +214,7 @@
       '<p class="step-count">' + escapeHtml(t.slider.stepPrefix) + ' ' + (index + 1) +
       ' ' + escapeHtml(t.slider.stepSeparator) + ' ' + steps.length + '</p>' +
       '<div class="progress" aria-hidden="true"><span style="width:' + progress + '%"></span></div>' +
-      imageBlock(step.image, step.alt, "instruction-image") +
+      imageBlock(step.image, step.alt, "instruction-image", step.action) +
       '<h1>' + escapeHtml(t.slider.stepPrefix) + ' ' + (index + 1) + '</h1>' +
       '<h2>' + escapeHtml(step.title) + '</h2>' +
       '<p class="lead">' + escapeHtml(step.text) + '</p>' +
@@ -267,6 +269,34 @@
       escapeHtml(help.phoneLabel) + '</a>' : '') +
       button(help.closeLabel, "close-modal", "secondary") +
       '</div></section></div>';
+  }
+
+  function renderShortcutActionModal(title, body) {
+    var t = config.texts.shortcutActions;
+    modalRoot.innerHTML = '<div class="modal-backdrop" role="presentation">' +
+      '<section class="modal" role="dialog" aria-modal="true" aria-labelledby="shortcutActionTitle">' +
+      '<h2 id="shortcutActionTitle">' + escapeHtml(title) + '</h2>' +
+      '<p>' + escapeHtml(body) + '</p>' +
+      '<div class="actions">' +
+      button(t.closeLabel, "close-modal", "primary") +
+      '</div></section></div>';
+  }
+
+  function shareShortcutTarget() {
+    var t = config.texts.shortcutActions;
+    var shareData = {
+      title: config.app.title,
+      url: config.links.shortcutTargetUrl,
+    };
+    if (navigator.share) {
+      navigator.share(shareData).then(function () {
+        renderShortcutActionModal(t.shareTitle, t.shareBody);
+      }).catch(function () {
+        renderShortcutActionModal(t.shareTitle, t.shareBody);
+      });
+      return;
+    }
+    renderShortcutActionModal(t.shareUnavailableTitle, t.shareUnavailableBody);
   }
 
   function clearModal() {
@@ -325,6 +355,13 @@
     if (action === "modal-telegram") return go("telegram-check");
     if (action === "modal-sdn") return go("sdn-video");
     if (action === "close-modal") return clearModal();
+    if (action === "show-safari-help") {
+      return renderShortcutActionModal(
+        config.texts.shortcutActions.safariTitle,
+        config.texts.shortcutActions.safariBody
+      );
+    }
+    if (action === "share-shortcut-target") return shareShortcutTarget();
     if (action === "shortcut-next") {
       state.shortcutIndex += 1;
       return render();

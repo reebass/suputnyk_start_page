@@ -193,25 +193,6 @@ p {
   background: var(--soft);
 }
 
-.image-action {
-  display: block;
-  width: 100%;
-  padding: 0;
-  background: transparent;
-  border: 0;
-  cursor: pointer;
-}
-
-.image-action .instruction-image {
-  transition: border-color 140ms ease, transform 140ms ease;
-}
-
-.image-action:hover .instruction-image,
-.image-action:focus-visible .instruction-image {
-  border-color: var(--green);
-  transform: translateY(-1px);
-}
-
 .image-placeholder {
   display: grid;
   min-height: 180px;

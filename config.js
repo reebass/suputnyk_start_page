@@ -7,8 +7,15 @@ window.NOVUS_LMS_CONFIG = {
   brand: {
     logoPath: "assets/logo/novus-logo.svg",
     logoAlt: "NOVUS",
-    heroPath: "assets/hero/start-hero.svg",
+    heroPath: "assets/hero/loader-bg.png",
     heroAlt: "Помічник NOVUS для початку навчання",
+  },
+  loader: {
+    enabled: true,
+    title: "Зачекай хвильку, завантажуємо дані...",
+    backgroundImage: "assets/hero/loader-bg.png",
+    minVisibleMs: 5000,
+    maxWaitMs: 8000,
   },
   links: {
     telegramBotUrl: "https://t.me/novus_lms_bot_placeholder",
@@ -126,32 +133,38 @@ window.NOVUS_LMS_CONFIG = {
     iosSafariFirstStep: {
       title: "Відкрий сторінку в Safari",
       text: "Щоб додати значок на iPhone, сторінку потрібно відкрити саме в Safari.",
-      image: "assets/instructions/ios/open-safari.svg",
+      image: "assets/instructions/ios/open-safari.png",
       alt: "Відкриття сторінки в Safari",
     },
     ios: [
       {
+        title: "Натисни три крапки внизу браузера",
+        text: "У нижній частині Safari натисни кнопку з трьома крапками. Після цього відкриється меню з додатковими діями.",
+        image: "assets/instructions/ios/more-menu.png",
+        alt: "Кнопка з трьома крапками в Safari",
+      },
+      {
         title: "Натисни кнопку поширення",
         text: "У нижній частині Safari натисни кнопку зі стрілкою вгору.",
-        image: "assets/instructions/ios/share.svg",
+        image: "assets/instructions/ios/share.png",
         alt: "Кнопка поширення в Safari",
       },
       {
         title: "Обери «На початковий екран»",
         text: "Прокрути список дій і натисни «На початковий екран».",
-        image: "assets/instructions/ios/add-to-home.svg",
+        image: "assets/instructions/ios/add-to-home.png",
         alt: "Додавання на початковий екран iPhone",
       },
       {
         title: "Підтверди додавання",
         text: "Натисни «Додати» у верхньому куті екрана.",
-        image: "assets/instructions/ios/confirm.svg",
+        image: "assets/instructions/ios/confirm.png",
         alt: "Підтвердження додавання ярлика",
       },
       {
         title: "Відкривай СДН зі значка",
         text: "На головному екрані з'явиться значок СДН. Натискай його, коли потрібно навчатися.",
-        image: "assets/instructions/ios/done.svg",
+        image: "assets/instructions/ios/done.png",
         alt: "Готовий ярлик на iPhone",
       },
     ],

@@ -5,6 +5,10 @@
   var app = document.getElementById("app");
   var modalRoot = document.getElementById("modalRoot");
   var helpButton = document.getElementById("helpButton");
+  var appLoader = document.getElementById("appLoader");
+  var loaderTitle = document.getElementById("loaderTitle");
+  var loaderProgressBar = document.getElementById("loaderProgressBar");
+  var loaderProgressText = document.getElementById("loaderProgressText");
 
   var state = {
     screen: "welcome",
@@ -30,6 +34,129 @@
     if (isIOS()) return config.links.telegramInstall.ios;
     if (isAndroid()) return config.links.telegramInstall.android;
     return config.links.telegramInstall.fallback;
+  }
+
+  function updateLoaderProgress(done, total) {
+    var percent = total ? Math.round((done / total) * 100) : 100;
+    if (loaderProgressBar) loaderProgressBar.style.width = percent + "%";
+    if (loaderProgressText) loaderProgressText.textContent = percent + "%";
+  }
+
+  function addAsset(list, value) {
+    if (!value || typeof value !== "string") return;
+    if (/^(https?:|mailto:|tel:|#)/i.test(value)) return;
+    if (list.indexOf(value) === -1) list.push(value);
+  }
+
+  function collectPreloadAssets() {
+    var assets = [];
+    addAsset(assets, config.brand.logoPath);
+    addAsset(assets, config.brand.heroPath);
+    if (config.loader && config.loader.backgroundImage) addAsset(assets, config.loader.backgroundImage);
+    if (config.instructions) {
+      addAsset(assets, config.instructions.iosSafariFirstStep && config.instructions.iosSafariFirstStep.image);
+      (config.instructions.ios || []).forEach(function (step) {
+        addAsset(assets, step.image);
+      });
+      (config.instructions.android || []).forEach(function (step) {
+        addAsset(assets, step.image);
+      });
+    }
+    Object.keys(config.videos || {}).forEach(function (key) {
+      var video = config.videos[key];
+      if (video && video.type === "mp4") addAsset(assets, video.src);
+    });
+    return assets;
+  }
+
+  function preloadImage(src) {
+    return new Promise(function (resolve) {
+      var image = new Image();
+      image.onload = resolve;
+      image.onerror = resolve;
+      image.src = src;
+    });
+  }
+
+  function preloadVideo(src) {
+    return new Promise(function (resolve) {
+      var video = document.createElement("video");
+      var done = false;
+      function finish() {
+        if (done) return;
+        done = true;
+        resolve();
+      }
+      video.preload = "auto";
+      video.muted = true;
+      video.playsInline = true;
+      video.addEventListener("canplaythrough", finish, { once: true });
+      video.addEventListener("loadeddata", finish, { once: true });
+      video.addEventListener("error", finish, { once: true });
+      video.src = src;
+      video.load();
+      window.setTimeout(finish, 5000);
+    });
+  }
+
+  function preloadAsset(src) {
+    if (/\.(mp4|webm|mov)(\?.*)?$/i.test(src)) return preloadVideo(src);
+    return preloadImage(src);
+  }
+
+  function hideLoader() {
+    document.body.classList.remove("is-loading");
+    document.body.classList.add("is-ready");
+    if (!appLoader) return;
+    appLoader.setAttribute("aria-hidden", "true");
+    window.setTimeout(function () {
+      appLoader.remove();
+    }, 260);
+  }
+
+  function preloadBeforeStart(callback) {
+    var loaderConfig = config.loader || {};
+    if (!loaderConfig.enabled) {
+      callback();
+      hideLoader();
+      return;
+    }
+
+    if (loaderTitle && loaderConfig.title) loaderTitle.textContent = loaderConfig.title;
+    if (appLoader && loaderConfig.backgroundImage) {
+      appLoader.style.setProperty("--loader-bg", "url('" + loaderConfig.backgroundImage.replace(/'/g, "\\'") + "')");
+    }
+
+    var startedAt = Date.now();
+    var assets = collectPreloadAssets();
+    var total = assets.length;
+    var done = 0;
+    var finished = false;
+    updateLoaderProgress(0, total);
+
+    function complete() {
+      if (finished) return;
+      finished = true;
+      var delay = Math.max(0, (loaderConfig.minVisibleMs || 0) - (Date.now() - startedAt));
+      window.setTimeout(function () {
+        callback();
+        hideLoader();
+      }, delay);
+    }
+
+    if (!total) {
+      updateLoaderProgress(1, 1);
+      complete();
+      return;
+    }
+
+    window.setTimeout(complete, loaderConfig.maxWaitMs || 8000);
+    Promise.all(assets.map(function (src) {
+      return preloadAsset(src).then(function () {
+        done += 1;
+        updateLoaderProgress(done, total);
+      });
+    })).then(complete);
   }
 
   function escapeHtml(value) {
@@ -253,7 +380,7 @@
     var phone = help.phone || "";
     var cleanPhone = phone.replace(/\s+/g, "");
     modalRoot.innerHTML = '<div class="modal-backdrop" role="presentation">' +
-      '<section class="modal" role="dialog" aria-modal="true" aria-labelledby="helpModalTitle">' +
+      '<section class="modal help-modal" role="dialog" aria-modal="true" aria-labelledby="helpModalTitle">' +
       '<h2 id="helpModalTitle">' + escapeHtml(help.modalTitle) + '</h2>' +
       '<p>' + escapeHtml(help.modalText) + '</p>' +
       '<div class="admin-contact">' +
@@ -363,7 +490,9 @@
   function registerServiceWorker() {
     if (!config.featureFlags.enableServiceWorker || !("serviceWorker" in navigator)) return;
     window.addEventListener("load", function () {
-      navigator.serviceWorker.register("sw.js").catch(function () {
+      navigator.serviceWorker.register("sw.js").then(function (registration) {
+        registration.update();
+      }).catch(function () {
         // The app must keep working when service workers are unavailable.
       });
     });
@@ -371,7 +500,7 @@
 
   setupHelp();
   registerServiceWorker();
-  render();
+  preloadBeforeStart(render);
 
   window.NOVUSDevice = {
     isIOS: isIOS,

@@ -15,18 +15,112 @@
 }
 
 html {
-  min-height: 100%;
+  height: 100%;
   background: var(--soft);
+  overflow: hidden;
 }
 
 body {
-  min-height: 100%;
+  height: 100%;
+  min-height: 100dvh;
   margin: 0;
   color: var(--text);
   font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  font-size: 18px;
-  line-height: 1.5;
+  font-size: clamp(15px, 2.2vh, 18px);
+  line-height: 1.38;
   letter-spacing: 0;
+  overflow: hidden;
+}
+
+.app-loader {
+  --loader-bg: none;
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  color: var(--white);
+  background: #0f1f12 var(--loader-bg) center / cover no-repeat;
+  transition: opacity 220ms ease, visibility 220ms ease;
+}
+
+.loader-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(17, 116, 7, 0.72);
+}
+
+.loader-panel {
+  position: relative;
+  z-index: 1;
+  width: min(100%, 420px);
+  text-align: center;
+}
+
+.loader-logo {
+  margin-bottom: 26px;
+  font-size: clamp(42px, 12vw, 76px);
+  font-weight: 900;
+  line-height: 1;
+  letter-spacing: 0;
+}
+
+.loader-spinner {
+  width: clamp(86px, 24vw, 132px);
+  height: clamp(86px, 24vw, 132px);
+  margin: 0 auto 26px;
+  border: 10px solid rgba(255, 255, 255, 0.32);
+  border-top-color: var(--white);
+  border-radius: 50%;
+  animation: loader-spin 900ms linear infinite;
+}
+
+.loader-title {
+  margin-bottom: 18px;
+  font-size: clamp(24px, 7vw, 36px);
+  font-weight: 850;
+  line-height: 1.15;
+}
+
+.loader-progress {
+  width: 100%;
+  height: 18px;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.32);
+  border: 2px solid rgba(255, 255, 255, 0.86);
+  border-radius: 999px;
+}
+
+.loader-progress span {
+  display: block;
+  width: 0;
+  height: 100%;
+  background: var(--white);
+  border-radius: inherit;
+  transition: width 180ms ease;
+}
+
+.loader-percent {
+  margin: 14px 0 0;
+  font-size: clamp(28px, 9vw, 46px);
+  font-weight: 900;
+  line-height: 1;
+}
+
+.is-ready .app-loader {
+  opacity: 0;
+  visibility: hidden;
+}
+
+.is-loading .app-shell {
+  visibility: hidden;
+}
+
+@keyframes loader-spin {
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 button,
@@ -36,36 +130,53 @@ a {
 
 .app-shell {
   width: 100%;
-  min-height: 100vh;
-  padding: 16px 16px 92px;
+  height: 100vh;
+  height: 100dvh;
+  min-height: 0;
+  padding: clamp(8px, 1.5vh, 16px) clamp(12px, 3vw, 16px) clamp(10px, 1.8vh, 16px);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(6px, 1.2vh, 12px);
 }
 
 .app-main {
   width: 100%;
   max-width: 660px;
+  height: 100%;
   margin: 0 auto;
   outline: none;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
 }
 
 .topbar {
   display: flex;
+  flex: 0 0 auto;
   justify-content: center;
-  padding: 6px 0 14px;
+  padding: 0 0 clamp(6px, 1vh, 12px);
 }
 
 .logo {
-  width: 132px;
+  width: clamp(92px, 26vw, 124px);
   max-width: 46vw;
+  max-height: clamp(28px, 5vh, 42px);
   height: auto;
 }
 
 .card {
   width: 100%;
-  padding: 22px;
+  flex: 1 1 auto;
+  min-height: 0;
+  padding: clamp(12px, 2.2vh, 22px);
   background: var(--white);
   border: 1px solid var(--border);
   border-radius: 8px;
   box-shadow: var(--shadow);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
 }
 
 h1,
@@ -75,27 +186,27 @@ p {
 }
 
 h1 {
-  margin-bottom: 14px;
-  font-size: 30px;
+  margin-bottom: clamp(6px, 1.2vh, 12px);
+  font-size: clamp(21px, 4.8vh, 30px);
   line-height: 1.18;
 }
 
 h2 {
-  margin-bottom: 10px;
-  font-size: 22px;
+  margin-bottom: clamp(4px, 0.8vh, 8px);
+  font-size: clamp(17px, 3.2vh, 22px);
   line-height: 1.22;
 }
 
 p {
-  margin-bottom: 16px;
+  margin-bottom: clamp(6px, 1.2vh, 12px);
 }
 
 .lead {
-  font-size: 19px;
+  font-size: clamp(15px, 2.45vh, 19px);
 }
 
 .note {
-  padding: 14px;
+  padding: clamp(10px, 1.7vh, 14px);
   color: var(--muted);
   background: var(--soft);
   border: 1px solid var(--border);
@@ -105,8 +216,10 @@ p {
 .actions,
 .slider-actions {
   display: grid;
-  gap: 12px;
-  margin-top: 22px;
+  flex: 0 0 auto;
+  gap: clamp(7px, 1.2vh, 12px);
+  margin-top: auto;
+  padding-top: clamp(8px, 1.4vh, 16px);
 }
 
 .slider-actions {
@@ -118,8 +231,8 @@ p {
   align-items: center;
   justify-content: center;
   width: 100%;
-  min-height: 58px;
-  padding: 14px 18px;
+  min-height: clamp(44px, 7.2vh, 58px);
+  padding: clamp(8px, 1.7vh, 14px) 16px;
   border-radius: 8px;
   border: 2px solid transparent;
   cursor: pointer;
@@ -163,8 +276,8 @@ p {
 
 .text-link,
 .inline-link {
-  min-height: 44px;
-  padding: 8px;
+  min-height: clamp(32px, 5.5vh, 44px);
+  padding: clamp(4px, 1vh, 8px);
   color: var(--dark-green);
   background: transparent;
   border: 0;
@@ -176,18 +289,19 @@ p {
 .hero-image {
   display: block;
   width: 100%;
-  max-height: 220px;
+  max-height: clamp(92px, 24vh, 190px);
   object-fit: contain;
-  margin: 0 auto 18px;
+  margin: 0 auto clamp(8px, 1.5vh, 16px);
+  flex: 0 1 auto;
 }
 
 .screen-image,
 .instruction-image {
   display: block;
   width: 100%;
-  max-height: 330px;
+  max-height: clamp(120px, 30vh, 260px);
   object-fit: contain;
-  margin: 16px auto;
+  margin: clamp(8px, 1.4vh, 14px) auto;
   border: 1px solid var(--border);
   border-radius: 8px;
   background: var(--soft);
@@ -195,10 +309,10 @@ p {
 
 .image-placeholder {
   display: grid;
-  min-height: 180px;
+  min-height: clamp(96px, 22vh, 160px);
   place-items: center;
-  padding: 20px;
-  margin: 16px 0;
+  padding: clamp(12px, 2vh, 20px);
+  margin: clamp(8px, 1.4vh, 14px) 0;
   color: var(--muted);
   background: var(--soft);
   border: 1px dashed var(--border);
@@ -211,7 +325,8 @@ p {
   width: 100%;
   aspect-ratio: 16 / 9;
   overflow: hidden;
-  margin: 18px 0;
+  margin: clamp(8px, 1.4vh, 14px) 0;
+  flex: 0 1 auto;
   background: #0f1f12;
   border-radius: 8px;
 }
@@ -225,10 +340,10 @@ p {
 
 .video-placeholder {
   display: grid;
-  min-height: 210px;
+  min-height: clamp(110px, 24vh, 190px);
   place-items: center;
-  padding: 22px;
-  margin: 18px 0;
+  padding: clamp(12px, 2vh, 22px);
+  margin: clamp(8px, 1.4vh, 14px) 0;
   color: var(--muted);
   background: linear-gradient(180deg, #f7fbf6 0%, #ffffff 100%);
   border: 1px dashed var(--border);
@@ -238,8 +353,8 @@ p {
 
 .video-icon {
   display: grid;
-  width: 58px;
-  height: 58px;
+  width: clamp(42px, 7vh, 58px);
+  height: clamp(42px, 7vh, 58px);
   place-items: center;
   margin-bottom: 8px;
   color: var(--white);
@@ -248,8 +363,8 @@ p {
 }
 
 .hint {
-  padding: 16px;
-  margin: 18px 0 0;
+  padding: clamp(10px, 1.7vh, 14px);
+  margin: clamp(8px, 1.4vh, 14px) 0 0;
   background: var(--warning);
   border: 1px solid #f3d599;
   border-radius: 8px;
@@ -262,8 +377,8 @@ p {
 .admin-contact {
   display: grid;
   gap: 6px;
-  padding: 16px;
-  margin: 18px 0 4px;
+  padding: clamp(10px, 1.7vh, 16px);
+  margin: clamp(8px, 1.4vh, 14px) 0 4px;
   background: var(--soft);
   border: 1px solid var(--border);
   border-radius: 8px;
@@ -284,15 +399,15 @@ p {
 
 .shortcut-mark {
   display: grid;
-  width: 112px;
-  height: 112px;
+  width: clamp(72px, 15vh, 112px);
+  height: clamp(72px, 15vh, 112px);
   place-items: center;
-  margin: 26px auto 6px;
+  margin: clamp(10px, 2vh, 22px) auto 4px;
   color: var(--white);
   background: var(--green);
   border-radius: 8px;
   box-shadow: 0 12px 28px rgba(66, 172, 53, 0.22);
-  font-size: 28px;
+  font-size: clamp(20px, 4vh, 28px);
   font-weight: 800;
 }
 
@@ -302,14 +417,14 @@ p {
 }
 
 .step-count {
-  margin-bottom: 8px;
+  margin-bottom: clamp(4px, 0.8vh, 8px);
   color: var(--dark-green);
   font-weight: 750;
 }
 
 .progress {
   width: 100%;
-  height: 10px;
+  height: clamp(6px, 1.2vh, 10px);
   overflow: hidden;
   background: var(--border);
   border-radius: 999px;
@@ -323,21 +438,28 @@ p {
 }
 
 .help-button {
-  position: fixed;
-  right: 16px;
-  bottom: 16px;
-  z-index: 20;
   display: inline-flex;
+  flex: 0 0 auto;
   align-items: center;
+  justify-content: center;
+  align-self: center;
   gap: 8px;
-  min-height: 50px;
-  padding: 12px 16px;
-  color: var(--white);
-  background: var(--dark-green);
-  border-radius: 999px;
-  box-shadow: 0 12px 30px rgba(17, 116, 7, 0.25);
-  font-weight: 750;
+  min-height: clamp(30px, 5vh, 40px);
+  padding: 2px 8px;
+  color: var(--muted);
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+  font-size: clamp(14px, 2.1vh, 16px);
+  font-weight: 650;
   text-decoration: none;
+}
+
+.help-button:hover,
+.help-button:focus-visible {
+  color: var(--dark-green);
+  text-decoration: underline;
 }
 
 .help-button.disabled {
@@ -351,16 +473,29 @@ p {
   z-index: 30;
   display: grid;
   place-items: center;
-  padding: 18px;
+  padding: 12px;
   background: rgba(31, 41, 51, 0.48);
 }
 
 .modal {
   width: min(100%, 520px);
-  padding: 22px;
+  max-height: calc(100dvh - 24px);
+  padding: clamp(14px, 2.4vh, 22px);
   background: var(--white);
   border-radius: 8px;
   box-shadow: 0 28px 70px rgba(0, 0, 0, 0.22);
+}
+
+.help-modal {
+  text-align: center;
+}
+
+.help-modal .actions {
+  justify-items: center;
+}
+
+.help-modal .button {
+  max-width: 360px;
 }
 
 :focus-visible {
@@ -370,19 +505,94 @@ p {
 
 @media (min-width: 768px) {
   .app-shell {
-    padding: 32px 28px 104px;
+    padding: 20px 28px 16px;
   }
 
   .card {
-    padding: 30px;
+    padding: 24px;
   }
 
   h1 {
-    font-size: 38px;
+    font-size: 34px;
   }
 
   .lead {
+    font-size: 19px;
+  }
+}
+
+@media (max-height: 680px) {
+  body {
+    line-height: 1.28;
+  }
+
+  .card {
+    padding: 10px;
+  }
+
+  .topbar {
+    padding-bottom: 4px;
+  }
+
+  .logo {
+    width: 88px;
+    max-height: 28px;
+  }
+
+  h1 {
     font-size: 20px;
+    margin-bottom: 5px;
+  }
+
+  h2 {
+    font-size: 16px;
+  }
+
+  p {
+    margin-bottom: 5px;
+  }
+
+  .lead {
+    font-size: 14px;
+  }
+
+  .button {
+    min-height: 40px;
+    padding-top: 7px;
+    padding-bottom: 7px;
+  }
+
+  .text-link,
+  .inline-link {
+    min-height: 30px;
+  }
+
+  .hero-image {
+    max-height: 78px;
+  }
+
+  .instruction-image {
+    max-height: 112px;
+  }
+
+  .video-placeholder {
+    min-height: 100px;
+  }
+
+  .video-icon {
+    width: 36px;
+    height: 36px;
+  }
+
+  .hint,
+  .note {
+    padding: 8px;
+  }
+
+  .shortcut-mark {
+    width: 64px;
+    height: 64px;
+    margin-top: 8px;
   }
 }
 
@@ -392,5 +602,9 @@ p {
   *::after {
     scroll-behavior: auto !important;
     transition: none !important;
+  }
+
+  .loader-spinner {
+    animation: none;
   }
 }
